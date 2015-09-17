@@ -19,7 +19,7 @@ public class JojoStandUp {
         this.slackSession = slackSession;
     }
 
-    @Scheduled(fixedRate = 5000)
+    //@Scheduled(fixedRate = 5000)
     //@Scheduled(cron="0 30 9 * * MON-FRI")
     public void callForStandUp() {
         log.info("every 5 sec");

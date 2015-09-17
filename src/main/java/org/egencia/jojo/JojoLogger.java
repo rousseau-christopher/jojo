@@ -24,10 +24,9 @@ public class JojoLogger {
     }
 
     @PostConstruct
-    public void startLoggin() {
+    public void startLogging() {
         slackSession.addMessagePostedListener(
-                (e, s) -> {
-                    logMessage(e); }
+                (e, s) -> logMessage(e)
         );
     }
 
