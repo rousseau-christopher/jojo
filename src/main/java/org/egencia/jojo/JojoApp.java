@@ -1,6 +1,6 @@
 package org.egencia.jojo;
 
-import org.egencia.jojo.configuration.Jojoconfiguration;
+import org.egencia.jojo.configuration.JojoConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -14,7 +14,7 @@ public class JojoApp {
     private static final Logger log = LoggerFactory.getLogger(JojoApp.class);
     public static void main(String[] args) throws Exception {
 
-        ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(Jojoconfiguration.class);
+        ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(JojoConfiguration.class);
 
         while (true) {
             Thread.sleep(1000);

@@ -16,7 +16,7 @@ import java.io.IOException;
 @ComponentScan(basePackages = "org.egencia.jojo")
 @PropertySource("classpath:/jojo.properties")
 @EnableScheduling
-public class Jojoconfiguration {
+public class JojoConfiguration {
 
     @Value("${slackToken}")
     private String slackToken;
