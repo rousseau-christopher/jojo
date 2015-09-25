@@ -1,7 +1,6 @@
 package org.egencia.jojo;
 
-import org.hamcrest.Matchers;
-import org.junit.Assert;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import java.net.MalformedURLException;
@@ -18,7 +17,7 @@ public class CommitStripTest  {
 
         String result  = commitStrip.getValue(rawData);
 
-        Assert.assertThat(result, Matchers.equalTo("http://www.commitstrip.com/wp-content/uploads/2015/09/Strip-Le-gars-qui-parle-trop-650-final1.jpg"));
+        Assertions.assertThat(result).isEqualTo("http://www.commitstrip.com/wp-content/uploads/2015/09/Strip-Le-gars-qui-parle-trop-650-final1.jpg");
     }
 
 }
