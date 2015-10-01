@@ -16,9 +16,11 @@ import javax.inject.Inject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,6 +28,7 @@ import java.util.regex.Pattern;
 @Component
 public class CommitStrip {
     private static final Logger log = LoggerFactory.getLogger(CommitStrip.class);
+    public static final String HTTP_WWW_COMMITSTRIP_COM_WP_CONTENT_UPLOADS = "http://www.commitstrip.com/wp-content/uploads/";
 
     private final SlackSession slackSession;
 
@@ -37,7 +40,7 @@ public class CommitStrip {
         rssUrl = new URL("http://www.commitstrip.com/fr/feed/");
     }
 
-    @Scheduled(cron="0 0 9 * * MON-FRI")
+    @Scheduled(cron="0 0 10 * * MON-FRI")
     public void check() throws URISyntaxException, IOException, FeedException {
         List<SyndEntry> entries = getSyndEntries();
         SyndEntry syndEntry = entries.get(0);
@@ -55,13 +58,18 @@ public class CommitStrip {
         return feed.getEntries();
     }
 
-    public String getValue(String rawData) {
-        Pattern pattern = Pattern.compile("src=\"(.*?)\"");
+    public String getValue(String rawData) throws UnsupportedEncodingException {
+        Pattern pattern = Pattern.compile("src=\"" + Pattern.quote(HTTP_WWW_COMMITSTRIP_COM_WP_CONTENT_UPLOADS) + "(.*)/(.*?)\"");
         Matcher matcher = pattern.matcher(rawData);
+        String url = null;
         String image = null;
         if (matcher.find()) {
-            image = matcher.group(1);
+            url = matcher.group(1);
+            image = matcher.group(2);
         }
-        return image;
+        else {
+            log.info("failed");
+        }
+        return HTTP_WWW_COMMITSTRIP_COM_WP_CONTENT_UPLOADS + url + "/" + URLEncoder.encode(image, "UTF-8");
     }
 }
